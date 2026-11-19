@@ -56,6 +56,29 @@ table{width:100%;border-collapse:collapse;font-size:.95rem}td,th{border:1px soli
 .ph .nf{padding:16px 12px;text-align:center;font-size:.88rem;color:var(--mut)}
 .ph label{display:inline-block;margin-top:8px;padding:6px 14px;border:2px solid var(--pri);color:var(--pri);border-radius:10px;font-weight:700;cursor:pointer}
 #hd h3{margin:0 0 4px;font-size:1.05rem}
+.quiz-hero{position:relative;overflow:hidden;padding:22px;border-radius:18px;background:linear-gradient(125deg,#1d4ed8,#0e7490);color:#fff;margin:12px 0 18px}
+.quiz-hero:after{content:"";position:absolute;width:190px;height:190px;border:26px solid #ffffff20;border-radius:50%;right:-50px;top:-74px}
+.quiz-hero h2{font-size:clamp(1.5rem,4vw,2.1rem);margin:0 0 5px}.quiz-hero p{margin:0;max-width:680px;color:#e0f2fe}
+.level-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:12px;margin:16px 0}
+.level-card{position:relative;text-align:left;min-height:145px;border:1px solid var(--line);border-radius:16px;padding:15px;background:var(--card);color:var(--tx);box-shadow:0 5px 16px #0f1b3310;transition:transform .18s,box-shadow .18s}
+.level-card:not(:disabled):hover{transform:translateY(-3px);box-shadow:0 10px 24px #0f1b3320}.level-card:disabled{opacity:.62;cursor:not-allowed}
+.level-card .level-icon{font-size:1.8rem;display:block}.level-card b{display:block;color:var(--cy);font-size:1.08rem}.level-card small{display:block;color:var(--mut);margin-top:4px}
+.level-card .level-state{position:absolute;right:12px;top:12px;font-size:.78rem;font-weight:800;color:var(--mut)}
+.quiz-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}.quiz-type{display:inline-flex;align-items:center;border-radius:99px;background:var(--soft);color:var(--cy);padding:4px 11px;font-size:.82rem;font-weight:800}
+.quiz-question{font-size:clamp(1.25rem,3vw,1.7rem);margin:12px 0 16px;line-height:1.35}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}.quiz-options .opt{margin:0;min-height:54px}
+.quiz-input{width:100%;font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:var(--bg);color:var(--tx);margin:4px 0 10px}
+.quiz-feedback{padding:14px 16px;border-radius:12px;margin:14px 0;background:var(--soft);border-left:5px solid var(--cy)}
+.quiz-feedback.good{border-color:var(--ok)}.quiz-feedback.bad{border-color:var(--bad)}
+.quiz-feedback b{display:block;font-size:1.05rem;margin-bottom:4px}.quiz-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.quiz-result{text-align:center;padding:22px 10px}.quiz-score{font-size:clamp(2.5rem,8vw,4.4rem);line-height:1.1;font-weight:900;color:var(--cy);margin:10px 0}
+.quiz-level-results{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin:18px 0}
+.quiz-level-results div{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
+.quiz-level-results b{display:block;color:var(--cy)}.quiz-note{color:var(--mut)}
+.quiz-return{text-align:right;margin-top:16px}
+.quiz-question-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:16px}
+.quiz-question-actions>.go{height:52px;display:inline-flex;align-items:center}
+@media(max-width:560px){.quiz-options{grid-template-columns:1fr}.level-grid{grid-template-columns:1fr 1fr}.level-card{padding:12px;min-height:135px}}
 </style>
 </head>
 <body>
@@ -248,24 +271,142 @@ var CP=[["Modem","Router","Penerjemah sinyal ISP","Pengarah lalu lintas","Modem 
 ["Access Point","Router","Pintu masuk WiFi","Pengarah lalu lintas","AP hanya memancarkan WiFi, sedangkan router juga mengatur lalu lintas data.",[["Fungsi","Memancarkan WiFi dari jaringan kabel.","Mengarahkan data antar jaringan."],["Layer","Layer 1 & 2.","Layer 3."],["Kebutuhan","Butuh router atau switch di belakangnya.","Dapat berdiri sendiri."]]]];
 function cmp(i){mark($("bt"),i);var c=CP[i];$("bc").innerHTML='<div class="vs"><div><b>'+c[0]+'</b><br>'+c[2]+'</div><div><b>'+c[1]+'</b><br>'+c[3]+'</div></div><div class="box">'+c[4]+'</div><table><tr><th>Kriteria</th><th>'+c[0]+'</th><th>'+c[1]+'</th></tr>'+c[5].map(function(r){return"<tr><td><b>"+r[0]+"</b></td><td>"+r[1]+"</td><td>"+r[2]+"</td></tr>"}).join("")+"</table>"}
 /* ---------- kuis ---------- */
-var Q=[["Perangkat yang menerjemahkan sinyal dari ISP menjadi sinyal digital adalah…",["Modem","Switch","Hub"],0,"Modem memodulasi dan mendemodulasi sinyal ISP."],
-["Perangkat yang menyiarkan data ke semua port tanpa mengenal MAC address adalah…",["Switch","Hub","Router"],1,"Hub bekerja “buta” dan melakukan broadcast."],
-["Switch meneruskan data berdasarkan…",["MAC address","Warna kabel","Nama pengguna"],0,"Switch memiliki tabel MAC address."],
-["Router mengarahkan paket data berdasarkan…",["IP address","Frekuensi radio","Warna LED"],0,"Router bekerja di Layer 3 memakai IP address."],
-["Jumlah kawat pada kabel UTP dan pin pada konektor RJ45 adalah…",["4","6","8"],2,"Ada 4 pasang kawat, yaitu 8 kawat dan 8 pin."],
-["Komponen yang memungkinkan PC terhubung ke jaringan adalah…",["NIC","GPU","SSD"],0,"NIC (Network Interface Card) adalah kartu jaringan."],
-["Perangkat yang memancarkan sinyal WiFi dari jaringan kabel adalah…",["Access Point","Hub","Kabel UTP"],0,"Access Point mengubah data kabel menjadi gelombang radio."],
-["Jaringan di satu lab komputer sekolah termasuk…",["LAN","WAN","PAN"],0,"LAN mencakup area terbatas seperti satu gedung."]];
-var qi=0,sc=0;
-function rq(){var b=$("qb");b.innerHTML="";if(qi>=Q.length){b.innerHTML="<h2>Selesai!</h2><p>Skor kamu: <b>"+sc+" / "+Q.length+"</b></p>";var u=document.createElement("button");u.className="go";u.textContent="Ulangi";u.onclick=function(){qi=0;sc=0;rq()};b.appendChild(u);return}
- var q=Q[qi],h=document.createElement("div");h.innerHTML="<b>Soal "+(qi+1)+" dari "+Q.length+"</b> · Skor: "+sc+'<div class="bar"><i style="width:'+qi/Q.length*100+'%"></i></div><h2>'+q[0]+"</h2>";b.appendChild(h);
- var fb=document.createElement("div"),done=0;fb.className="box";fb.style.display="none";
- q[1].forEach(function(o,oi){var e=document.createElement("button");e.className="opt";e.textContent=o;e.onclick=function(){if(done)return;done=1;var ok=oi==q[2];if(ok)sc++;e.classList.add(ok?"ok":"no");b.querySelectorAll(".opt")[q[2]].classList.add("ok");
-  fb.style.display="block";fb.textContent=(ok?"Benar! ":"Belum tepat. ")+q[3];var n=document.createElement("button");n.className="go";n.textContent=qi+1<Q.length?"Lanjut →":"Lihat Skor";n.onclick=function(){qi++;rq()};b.appendChild(n)};b.appendChild(e)});b.appendChild(fb)}
+var LEVELS=[
+ {name:"Fondasi Jaringan",icon:"🌱",questions:[
+  ["mc","Jaringan komputer adalah…",["Sekumpulan perangkat yang saling terhubung untuk bertukar data","Satu komputer tanpa perangkat lain","Program untuk menggambar"],0,"Jaringan menghubungkan dua atau lebih perangkat agar dapat berkomunikasi dan berbagi sumber daya, seperti file, printer, atau koneksi internet."],
+  ["tf","LAN biasanya mencakup area terbatas seperti ruang kelas, rumah, atau gedung sekolah.",true,"Benar. LAN (Local Area Network) menghubungkan perangkat dalam wilayah geografis kecil yang dikelola secara lokal. Jangkauannya dapat berupa satu ruangan hingga satu kompleks gedung, berbeda dengan WAN yang mencakup wilayah sangat luas."],
+  ["short","Apa singkatan dari kartu antarmuka jaringan yang menghubungkan komputer ke jaringan?",["NIC","network interface card"],"NIC adalah singkatan dari Network Interface Card. Komponen ini menyediakan antarmuka jaringan berkabel atau nirkabel agar komputer dapat mengirim dan menerima data."],
+  ["mc","Alamat logis yang dipakai router untuk menentukan tujuan paket adalah…",["IP address","MAC address","Nama perangkat"],0,"IP address menunjukkan alamat perangkat dalam jaringan dan dipakai router untuk meneruskan paket antarjaringan. MAC address digunakan untuk komunikasi lokal pada lapisan data link."],
+  ["tf","MAC address digunakan router untuk menentukan rute paket antarjaringan.",false,"Pernyataan ini salah. Router meneruskan paket antarjaringan berdasarkan alamat IP tujuan dan tabel routing. MAC address dipakai untuk pengiriman frame pada jaringan lokal; switch Layer 2 memakainya untuk menentukan port tujuan, bukan router untuk memilih rute antarjaringan."],
+  ["short","Jaringan yang menghubungkan perangkat di area sangat luas, misalnya antarkota atau antarnegara, disebut apa?",["WAN","wide area network"],"WAN adalah Wide Area Network. Jaringan ini menghubungkan LAN yang berjauhan melalui infrastruktur operator atau koneksi jarak jauh; internet merupakan contoh jaringan global yang sangat luas."],
+  ["mc","Perangkat yang mengubah sinyal dari penyedia layanan internet agar dapat digunakan perangkat jaringan disebut…",["Modem","Switch","NIC"],0,"Modem melakukan modulasi dan demodulasi sinyal pada jalur ISP. Modem atau ONT menghubungkan sisi penyedia layanan dengan koneksi Ethernet yang dapat diteruskan ke router."],
+  ["tf","Access point berfungsi utama mengatur rute paket antarjaringan menggunakan tabel routing.",false,"Pernyataan ini salah. Access point menyediakan sambungan Wi-Fi dan menjembatani perangkat nirkabel ke LAN. Pengaturan rute paket antarjaringan dan tabel routing merupakan fungsi router; walaupun beberapa perangkat rumahan menggabungkan AP dan router dalam satu kotak, keduanya tetap memiliki peran berbeda."],
+  ["short","Sebutkan nama perangkat yang meneruskan paket antarjaringan berdasarkan IP address.",["Router","router"],"Router menghubungkan jaringan yang berbeda dan meneruskan paket berdasarkan alamat IP tujuan serta informasi pada tabel routing."],
+  ["mc","Pada topologi star, semua komputer biasanya terhubung ke perangkat pusat berupa…",["Switch","Modem","Konektor RJ45"],0,"Dalam topologi star, setiap perangkat memiliki sambungan ke satu perangkat pusat, umumnya switch. Kerusakan satu kabel biasanya hanya memutus satu perangkat, tetapi gangguan pada switch pusat dapat memengaruhi banyak koneksi."]
+ ]},
+ {name:"Perangkat & Perannya",icon:"🧭",questions:[
+  ["mc","Perbedaan utama switch dari hub adalah switch…",["Meneruskan frame ke port tujuan berdasarkan MAC","Mengulang sinyal ke semua port setiap saat","Mengubah sinyal fiber menjadi Ethernet"],0,"Switch mempelajari alamat MAC dan mengirim frame ke port tujuan bila alamat tersebut sudah diketahui. Hub tidak memiliki tabel MAC dan mengulang sinyal ke semua port, sehingga menimbulkan lalu lintas yang tidak perlu."],
+  ["tf","Hub tidak memeriksa alamat MAC dan mengulang sinyal yang masuk ke port-port lain.",true,"Benar. Hub bekerja pada Layer 1 dan tidak memiliki tabel MAC. Ketika sebuah sinyal masuk, hub mengulangnya ke port lain sehingga perangkat yang bukan tujuan juga menerima lalu lintas tersebut. Switch bekerja lebih terarah dengan mempelajari MAC dan memilih port tujuan."],
+  ["short","Perangkat yang biasanya menjadi gerbang (default gateway) dari LAN menuju jaringan lain adalah…",["Router","router"],"Router lokal menjadi default gateway bagi perangkat LAN. Saat tujuan berada di luar subnet lokal, komputer mengirim paket ke alamat gateway agar router meneruskannya ke jaringan berikutnya."],
+  ["mc","Layanan yang membagikan konfigurasi IP secara otomatis kepada klien disebut…",["DHCP","DNS","HTTP"],0,"DHCP (Dynamic Host Configuration Protocol) dapat membagikan alamat IP, subnet mask, gateway, dan informasi DNS secara otomatis. Tanpa DHCP, parameter tersebut perlu diatur manual pada tiap perangkat."],
+  ["tf","Server hanya dapat berupa perangkat keras khusus dan tidak dapat dijalankan sebagai perangkat lunak di komputer biasa.",false,"Pernyataan ini salah. Server adalah peran yang dijalankan perangkat lunak untuk melayani permintaan klien; perangkat lunaknya dapat berjalan di komputer khusus maupun komputer biasa. Contohnya aplikasi web server dapat dijalankan saat praktik di laptop, meskipun server produksi sering memakai perangkat yang dirancang untuk bekerja stabil."],
+  ["short","Teknologi yang menerjemahkan alamat IP privat agar banyak perangkat dapat berbagi satu alamat IP publik disebut…",["NAT","network address translation"],"NAT (Network Address Translation) mengubah informasi alamat pada lalu lintas antara jaringan privat dan publik. Router rumah sering menggunakannya agar beberapa perangkat dapat berbagi koneksi internet."],
+  ["mc","Perangkat yang menghubungkan banyak komputer dalam LAN dan menggunakan tabel MAC adalah…",["Switch","Router","Modem"],0,"Switch menghubungkan perangkat dalam satu LAN dan menggunakan tabel MAC untuk meneruskan frame. Router menghubungkan jaringan berbeda, sedangkan modem menghubungkan jaringan dengan jalur ISP."],
+  ["tf","Access point dan router selalu merupakan perangkat yang sama dan tidak dapat dipisahkan.",false,"Pernyataan ini salah. Keduanya memiliki fungsi berbeda: AP menyediakan akses Wi-Fi ke LAN, sedangkan router mengarahkan paket antarjaringan. Produk rumahan sering menggabungkan router, switch kecil, dan AP dalam satu kotak, tetapi di jaringan sekolah fungsi-fungsi tersebut dapat memakai perangkat terpisah."],
+  ["short","Apa sebutan untuk alamat IP router yang digunakan perangkat sebagai jalan keluar dari subnet lokal?",["Default gateway","gateway","gateway default"],"Default gateway adalah alamat antarmuka router yang dapat dijangkau dari subnet klien. Komputer mengirim paket ke gateway ketika alamat tujuan tidak berada di jaringan lokalnya."],
+  ["mc","Perangkat yang membagikan layanan melalui jaringan kepada komputer peminta disebut…",["Server","Hub","Repeater"],0,"Server menyediakan layanan, misalnya web, database, atau penyimpanan file, dan merespons permintaan dari klien. Server dapat berupa komputer khusus maupun aplikasi yang berjalan di komputer biasa."]
+ ]},
+ {name:"Kabel & Media Transmisi",icon:"🔌",questions:[
+  ["mc","Kabel UTP berisi berapa pasang kawat tembaga?",["2 pasang","4 pasang","8 pasang"],1,"Kabel UTP Ethernet umumnya memiliki empat pasang kawat terpilin, sehingga totalnya delapan kawat. Pasangan kawat dipilin untuk membantu mengurangi gangguan elektromagnetik dan crosstalk."],
+  ["tf","Kabel dengan susunan T568B pada satu ujung dan T568A pada ujung lainnya disebut straight-through.",false,"Pernyataan ini salah. Kabel straight-through memakai susunan standar yang sama pada kedua ujung, misalnya T568B–T568B atau T568A–T568A. Susunan T568A di satu ujung dan T568B di ujung lainnya merupakan kabel crossover tradisional karena pasangan kirim dan terima disilangkan."],
+  ["short","Sebutkan alat yang digunakan untuk memeriksa kesinambungan dan urutan kawat pada kabel jaringan setelah crimping.",["LAN tester","cable tester","network cable tester"],"LAN tester menguji apakah tiap konduktor tersambung dan apakah urutannya sesuai. Jika lampu pada unit utama dan remote menyala berurutan, kabel biasanya terpasang benar; hasil tetap perlu dicocokkan dengan standar dan jenis kabel."],
+  ["mc","Konektor yang umum dipasang pada ujung kabel Ethernet twisted-pair adalah…",["RJ45","USB-C","HDMI"],0,"Konektor modular RJ45 (sering disebut 8P8C) digunakan pada kabel Ethernet twisted-pair. Delapan konduktor kabel harus masuk dan terhubung pada pin yang sesuai agar sambungan berfungsi."],
+  ["tf","Pilinan pada pasangan kawat UTP membantu mengurangi gangguan sinyal antar-kawat.",true,"Benar. Pasangan kawat dipilin dengan pola tertentu agar gangguan elektromagnetik yang diterima kedua konduktor cenderung saling meniadakan. Pilinan juga membantu menekan crosstalk dari pasangan lain, walaupun kualitas kabel, panjang jalur, dan pemasangan tetap penting."],
+  ["short","Apa nama teknik menjepit konektor ke ujung kabel Ethernet menggunakan crimping tool?",["Crimping","crimp"],"Crimping menekan kontak konektor agar menembus isolasi kawat dan membuat sambungan listrik. Urutan warna harus mengikuti standar yang dipilih, kemudian kabel sebaiknya diuji dengan LAN tester."],
+  ["mc","Media jaringan yang mengirim data sebagai pulsa cahaya melalui serat kaca adalah…",["Fiber optik","UTP","Koaksial"],0,"Fiber optik membawa data menggunakan cahaya dalam serat kaca atau plastik. Media ini cocok untuk jarak jauh dan kapasitas tinggi serta tidak terpengaruh gangguan elektromagnetik seperti kabel tembaga."],
+  ["tf","Kabel crossover menggunakan susunan kawat yang sama persis pada kedua ujungnya.",false,"Pernyataan ini salah. Kabel crossover tradisional menggunakan standar berbeda pada kedua ujung, misalnya T568A di satu ujung dan T568B di ujung lainnya, sehingga jalur kirim dan terima tersilang. Banyak perangkat modern mendukung auto-MDI/MDIX, tetapi memahami perbedaannya tetap berguna saat belajar dan memeriksa instalasi."],
+  ["short","Sebutkan salah satu standar urutan warna kabel Ethernet yang digunakan saat memasang konektor.",["T568A","T568B","568A","568B"],"Standar yang umum adalah T568A dan T568B. Yang penting adalah mengikuti urutan pin standar dengan konsisten; kabel straight menggunakan standar yang sama pada kedua ujung."],
+  ["mc","Teknologi yang dapat membawa daya listrik dan data melalui satu kabel Ethernet disebut…",["PoE","NAT","DHCP"],0,"PoE (Power over Ethernet) mengirim daya dan data melalui kabel Ethernet yang sama. Teknologi ini dapat memudahkan pemasangan access point atau kamera IP, tetapi switch dan perangkat penerima harus mendukung standar serta kebutuhan dayanya."]
+ ]},
+ {name:"IP, Protokol & Layanan",icon:"🌐",questions:[
+  ["mc","Subnet mask membantu perangkat menentukan…",["Bagian alamat IP yang menunjukkan jaringan dan bagian host","Nama domain sebuah situs","Alamat MAC router"],0,"Subnet mask memisahkan bagian network dan host dari alamat IP. Dengan informasi tersebut, komputer dapat menentukan apakah tujuan berada di subnet yang sama atau paket harus dikirim melalui default gateway."],
+  ["tf","Jika alamat tujuan berada di luar subnet lokal, komputer biasanya mengirim paket melalui default gateway.",true,"Benar. Komputer membandingkan alamat tujuan dengan jaringan lokal memakai alamat IP dan subnet mask. Jika tujuan berada di subnet berbeda, paket dikirim ke default gateway yang terjangkau, biasanya antarmuka router pada LAN."],
+  ["short","Protokol yang menerjemahkan nama domain, misalnya contoh.com, menjadi alamat IP disebut…",["DNS","domain name system"],"DNS (Domain Name System) mencari alamat IP yang terkait dengan nama domain. Dengan DNS, pengguna tidak perlu mengingat alamat IP numerik setiap server yang ingin diakses."],
+  ["mc","Protokol yang umumnya digunakan browser untuk meminta halaman web adalah…",["HTTP","DHCP","ICMP"],0,"HTTP adalah protokol aplikasi untuk pertukaran permintaan dan respons web. HTTPS menggunakan HTTP yang dilindungi enkripsi TLS, sehingga data lebih terlindungi saat melintasi jaringan."],
+  ["tf","Perintah ping umumnya memakai pesan TCP untuk menguji keterjangkauan host dan mengukur waktu respons.",false,"Pernyataan ini salah. Ping umumnya memakai pesan Echo Request dan Echo Reply dari ICMP, bukan TCP. Respons yang diterima dapat dipakai untuk memperkirakan waktu perjalanan pulang-pergi. Namun, ping yang gagal tidak selalu berarti host mati karena firewall atau kebijakan jaringan dapat memblokir ICMP."],
+  ["short","Protokol transport yang menyediakan komunikasi andal dan berurutan dengan mekanisme konfirmasi adalah…",["TCP","transmission control protocol"],"TCP membangun koneksi dan mengatur pengiriman ulang serta urutan data agar aplikasi menerima aliran data dengan andal. Mekanisme ini memiliki overhead lebih besar dibanding UDP."],
+  ["mc","Protokol transport yang sering dipilih untuk komunikasi real-time ketika latensi rendah lebih penting daripada pengiriman ulang setiap paket adalah…",["UDP","TCP","ARP"],0,"UDP tidak menyediakan koneksi dan pengiriman ulang bawaan seperti TCP, sehingga overhead dan latensinya dapat lebih rendah. Aplikasi real-time seperti panggilan suara dapat memilih UDP dan menangani kehilangan paket dengan cara sendiri."],
+  ["tf","Alamat IP privat seperti 192.168.1.10 dapat dirutekan langsung melalui internet publik tanpa penerjemahan.",false,"Pernyataan ini salah. Rentang alamat privat tidak dirutekan secara global di internet. Router biasanya menggunakan NAT untuk menerjemahkan lalu lintas perangkat privat ke alamat publik; komunikasi keluar juga memerlukan jalur dan kebijakan jaringan yang sesuai."],
+  ["short","Apa nama lapisan OSI yang menangani pengalamatan logis IP dan routing antarjaringan?",["Network","lapisan network","layer 3","layer 3 network"],"Lapisan Network adalah Layer 3 pada model OSI. Lapisan ini menangani pengalamatan logis seperti IP dan pemilihan jalur antarjaringan; router beroperasi terutama pada lapisan ini."],
+  ["mc","Switch Ethernet tradisional meneruskan frame terutama pada lapisan OSI…",["Data Link (Layer 2)","Network (Layer 3)","Application (Layer 7)"],0,"Switch Layer 2 membaca informasi frame Ethernet, khususnya MAC address, untuk meneruskan frame dalam LAN. Ada switch Layer 3 yang memiliki fungsi routing, tetapi bukan fungsi dasar switch Layer 2."]
+ ]},
+ {name:"Troubleshooting & Keamanan",icon:"🛡️",questions:[
+  ["mc","Langkah awal yang tepat saat satu PC tidak dapat terhubung ke jaringan kabel adalah…",["Memeriksa kabel, lampu link, dan status adapter jaringan","Langsung mengganti semua perangkat","Mematikan firewall tanpa pemeriksaan"],0,"Mulailah dari pemeriksaan fisik yang sederhana: pastikan kabel terpasang baik, lampu link menyala, dan adapter jaringan aktif. Setelah itu cek konfigurasi IP dan uji koneksi secara bertahap agar penyebab gangguan dapat ditemukan tanpa mengubah banyak hal sekaligus."],
+  ["tf","Meletakkan access point di dekat benda logam besar dan di balik banyak dinding biasanya membantu memperkuat sinyal Wi-Fi.",false,"Pernyataan ini salah. Logam, dinding tebal, dan penghalang padat dapat menyerap atau memantulkan gelombang radio sehingga sinyal melemah dan tidak merata. Tempatkan AP di posisi terbuka dan cukup tengah; lakukan pengukuran karena bentuk bangunan dan sumber interferensi juga berpengaruh."],
+  ["short","Sebutkan perintah umum pada Windows untuk melihat konfigurasi IP dan default gateway.",["ipconfig","ipconfig /all"],"Perintah ipconfig menampilkan konfigurasi antarmuka jaringan Windows, termasuk alamat IPv4 dan default gateway. ipconfig /all menampilkan rincian lebih lengkap seperti DNS server dan alamat fisik adapter."],
+  ["mc","Perlindungan Wi-Fi modern yang lebih aman daripada WEP adalah…",["WPA2 atau WPA3","Telnet","FTP"],0,"WPA2 atau WPA3 memberikan perlindungan Wi-Fi yang jauh lebih baik daripada WEP yang sudah usang dan mudah dibobol. Gunakan mode keamanan yang didukung perangkat, kata sandi kuat, dan perbarui firmware access point."],
+  ["tf","Menyambungkan dua port switch dengan kabel tanpa konfigurasi pencegah loop dapat menyebabkan broadcast storm.",true,"Benar. Loop Layer 2 dapat membuat frame broadcast berputar berulang-ulang dan memenuhi kapasitas jaringan, sehingga koneksi melambat atau terputus. Protokol seperti Spanning Tree membantu mencegah loop, tetapi kabel tetap harus dipasang sesuai desain dan konfigurasi switch."],
+  ["short","Sistem pada jaringan yang membantu menyaring lalu lintas berdasarkan aturan keamanan disebut…",["Firewall","firewall"],"Firewall menerapkan aturan untuk mengizinkan atau menolak lalu lintas jaringan. Aturan harus disusun sesuai kebutuhan layanan dan prinsip hak minimum; mematikan firewall bukan solusi aman untuk masalah koneksi."],
+  ["mc","Jika lampu link pada port switch mati dan PC tidak memperoleh koneksi kabel, hal pertama yang paling masuk akal diperiksa adalah…",["Kabel, konektor, dan port yang digunakan","Warna wallpaper komputer","Nama file di server"],0,"Lampu link mati dapat menunjukkan kabel terlepas atau rusak, konektor bermasalah, adapter nonaktif, atau port tidak berfungsi. Coba pastikan sambungan rapat dan uji dengan kabel atau port yang diketahui baik sebelum mengubah konfigurasi jaringan."],
+  ["tf","Kata sandi admin bawaan router aman dipertahankan karena hanya diketahui oleh pemilik jaringan.",false,"Pernyataan ini salah. Kata sandi bawaan sering diketahui publik atau mudah ditemukan, sehingga tidak boleh dianggap rahasia. Ganti dengan kata sandi unik yang kuat dan perbarui firmware melalui sumber resmi; enkripsi Wi-Fi yang baik serta menonaktifkan layanan admin yang tidak diperlukan juga membantu mengurangi risiko."],
+  ["short","Istilah untuk jeda waktu yang diperlukan paket mencapai tujuan dan respons kembali adalah…",["Latency","latensi","ping"],"Latency atau latensi adalah waktu tunda komunikasi jaringan, sering diukur menggunakan round-trip time. Latensi tinggi terasa pada aplikasi interaktif meskipun bandwidth koneksi besar."],
+  ["mc","Jika banyak perangkat berbagi satu jaringan tetapi perlu dipisahkan secara logis pada switch terkelola, fitur yang dapat digunakan adalah…",["VLAN","RJ45","SSID"],0,"VLAN (Virtual LAN) membagi jaringan Layer 2 menjadi segmen logis terpisah meskipun perangkat memakai infrastruktur switch yang sama. VLAN membantu pengelolaan dan isolasi, tetapi komunikasi antar-VLAN memerlukan routing serta aturan keamanan yang tepat."]
+ ]}
+];
+var quizLevel=0,quizIndex=0,quizScore=0,quizDone=[],quizBest=[];
+function quizButton(text,fn,outline){var e=document.createElement("button");e.className="go"+(outline?" o":"");e.textContent=text;e.onclick=fn;return e}
+function quizHeader(title,desc){var e=document.createElement("div");e.className="quiz-hero";var h=document.createElement("h2");h.textContent=title;var p=document.createElement("p");p.textContent=desc;e.appendChild(h);e.appendChild(p);return e}
+function quizMenu(){
+ var b=$("qb");b.innerHTML="";b.appendChild(quizHeader("Lima level, satu jaringan pengetahuan","Uji pemahaman jaringan dasar lewat 50 soal pilihan ganda, benar/salah, dan isian singkat. Selesaikan 10 soal untuk membuka level berikutnya."));
+ var g=document.createElement("div");g.className="level-grid";
+ LEVELS.forEach(function(l,i){var e=document.createElement("button"),unlocked=i===0||quizDone[i-1],complete=quizDone[i];e.className="level-card";e.disabled=!unlocked;
+  var ic=document.createElement("span");ic.className="level-icon";ic.textContent=l.icon;
+  var st=document.createElement("span");st.className="level-state";st.textContent=complete?"✓ Selesai":unlocked?"Terbuka":"🔒 Terkunci";
+  var nm=document.createElement("b");nm.textContent="Level "+(i+1);
+  var ds=document.createElement("small");ds.textContent=l.name+" · 10 soal"+(complete?" · Terbaik "+quizBest[i]+"/10":"");
+  e.appendChild(ic);e.appendChild(st);e.appendChild(nm);e.appendChild(ds);e.onclick=function(){quizStart(i)};g.appendChild(e)
+ });b.appendChild(g);
+ if(quizDone.length===LEVELS.length&&quizDone.every(function(x){return x})){b.appendChild(quizButton("Lihat umpan balik akhir",quizFinal))}
+}
+function quizStart(level){quizLevel=level;quizIndex=0;quizScore=0;quizQuestion()}
+function quizQuestion(){
+ var b=$("qb"),list=LEVELS[quizLevel].questions;b.dataset.answered="0";b.innerHTML="";
+ var top=document.createElement("div");top.className="quiz-top";
+ var lv=document.createElement("span");lv.className="quiz-type";lv.textContent=LEVELS[quizLevel].icon+"  Level "+(quizLevel+1)+" · "+LEVELS[quizLevel].name;
+ var count=document.createElement("b");count.textContent="Soal "+(quizIndex+1)+" dari 10 · Skor "+quizScore;
+ top.appendChild(lv);top.appendChild(count);b.appendChild(top);
+ var bar=document.createElement("div");bar.className="bar";var fill=document.createElement("i");fill.style.width=(quizIndex/10*100)+"%";bar.appendChild(fill);b.appendChild(bar);
+ var q=list[quizIndex],correctAt=-1,type=document.createElement("span");type.className="quiz-type";type.textContent=q[0]==="mc"?"Pilihan ganda":q[0]==="tf"?"Benar atau salah":"Isian singkat";b.appendChild(type);
+ var title=document.createElement("h2");title.className="quiz-question";title.textContent=q[1];b.appendChild(title);
+ var fb=document.createElement("div");fb.className="quiz-feedback";fb.style.display="none";b.appendChild(fb);
+ var controls=document.createElement("div");controls.className="quiz-question-actions";
+ function answer(ok,chosen){
+  if(b.dataset.answered==="1")return;b.dataset.answered="1";if(ok)quizScore++;
+  if(q[0]==="short"){input.disabled=true;var check=b.querySelector(".quiz-submit");if(check)check.remove()}
+  if(q[0]==="mc"){var opts=b.querySelectorAll(".opt");opts[correctAt].classList.add("ok");if(!ok)chosen.classList.add("no")}
+  if(q[0]==="tf"){var optsTF=b.querySelectorAll(".opt");optsTF[q[2]?0:1].classList.add("ok");if(!ok)chosen.classList.add("no")}
+  fb.style.display="block";fb.className="quiz-feedback "+(ok?"good":"bad");
+  var hd=document.createElement("b");hd.textContent=ok?"✅ Tepat!":"💡 Belum tepat — mari pahami alasannya";var tx=document.createElement("span");tx.textContent=q[0]==="short"?"Jawaban yang diterima: "+q[2][0]+". "+q[3]:q[0]==="mc"?q[4]:q[3];fb.appendChild(hd);fb.appendChild(tx);
+  count.textContent="Soal "+(quizIndex+1)+" dari 10 · Skor "+quizScore;
+  var next=quizButton(quizIndex<9?"Soal berikutnya →":"Selesaikan level →",function(){quizIndex++;if(quizIndex<10)quizQuestion();else quizLevelResult()});controls.appendChild(next);
+ }
+ if(q[0]==="mc"||q[0]==="tf"){
+  var options=document.createElement("div");options.className="quiz-options";var values=q[0]==="mc"?q[2]:["Benar","Salah"];
+  if(q[0]==="mc"){correctAt=(Math.floor(quizIndex/3)+quizLevel)%values.length;var answerText=values[q[3]],otherOptions=values.filter(function(v,i){return i!==q[3]}),optionIndex=0;values=values.map(function(v,i){return i===correctAt?answerText:otherOptions[optionIndex++]})}
+  values.forEach(function(v,i){var e=document.createElement("button");e.className="opt";e.textContent=v;e.onclick=function(){answer(q[0]==="mc"?i===correctAt:(i===0)===q[2],e)};options.appendChild(e)});b.appendChild(options)
+ }else{
+  var input=document.createElement("input");input.className="quiz-input";input.type="text";input.autocomplete="off";input.placeholder="Ketik jawaban singkatmu…";input.setAttribute("aria-label","Jawaban isian singkat");b.appendChild(input);
+  var submit=quizButton("Periksa jawaban",function(){var val=input.value.toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim();if(!val){input.focus();return}var ok=q[2].some(function(a){return val===a.toLowerCase().replace(/[^a-z0-9]+/g," ").replace(/\s+/g," ").trim()});answer(ok,input)});submit.classList.add("quiz-submit");controls.appendChild(submit);input.onkeydown=function(e){if(e.key==="Enter")submit.click()}
+ }
+ controls.insertBefore(quizButton("← Kembali",quizMenu,true),controls.firstChild);b.appendChild(controls)
+}
+function quizLevelResult(){
+ var b=$("qb");quizDone[quizLevel]=true;quizBest[quizLevel]=Math.max(quizBest[quizLevel]||0,quizScore);b.innerHTML="";
+ var pct=quizScore*10,feedback=pct>=90?"Luar biasa! Pemahamanmu sangat kuat. Siap menerapkan konsep ini di praktik jaringan.":pct>=70?"Bagus! Dasar pemahamanmu sudah baik. Tinjau kembali soal yang belum tepat agar makin mantap.":"Tetap semangat. Baca kembali penjelasan pada soal yang belum tepat, lalu ulangi level untuk berlatih lagi.";
+ var wrap=document.createElement("div");wrap.className="quiz-result";wrap.appendChild(quizHeader("Level "+(quizLevel+1)+" selesai! "+LEVELS[quizLevel].icon,"Kamu telah menuntaskan 10 soal "+LEVELS[quizLevel].name+"."));
+ var score=document.createElement("div");score.className="quiz-score";score.textContent=quizScore+"/10";wrap.appendChild(score);
+ var msg=document.createElement("p");msg.textContent=feedback;wrap.appendChild(msg);
+ var note=document.createElement("p");note.className="quiz-note";note.textContent="Skor terbaik level ini: "+quizBest[quizLevel]+"/10. Level berikutnya sekarang terbuka.";wrap.appendChild(note);b.appendChild(wrap);
+ var actions=document.createElement("div");actions.className="quiz-actions";
+ actions.appendChild(quizButton("Ulangi level ini",function(){quizStart(quizLevel)},true));
+ if(quizLevel<4)actions.appendChild(quizButton("Lanjut ke level "+(quizLevel+2)+" →",function(){quizStart(quizLevel+1)}));
+ else actions.appendChild(quizButton("Lihat umpan balik akhir",quizFinal));
+ b.appendChild(actions);var back=document.createElement("div");back.className="quiz-return";back.appendChild(quizButton("← Kembali",quizMenu,true));b.appendChild(back)
+}
+function quizFinal(){
+ var b=$("qb");b.innerHTML="";var total=0;quizBest.forEach(function(n){total+=n||0});var pct=Math.round(total/50*100);
+ var feedback=pct>=90?"Hebat! Kamu menguasai materi jaringan dasar dengan sangat baik. Tantang dirimu menerapkannya saat merancang atau mendiagnosis jaringan.":pct>=75?"Kerja bagus! Sebagian besar konsep sudah kamu kuasai. Perkuat lagi topik pada level dengan skor terendah, terutama sebelum praktik konfigurasi.":pct>=60?"Kamu sudah memiliki bekal yang baik. Pelajari lagi penjelasan yang tersedia, lalu ulangi level yang skornya masih rendah untuk memperkuat konsep.":"Jangan berkecil hati—belajar jaringan memang bertahap. Kembali ke materi perangkat, kabel, IP, dan troubleshooting, kemudian ulangi kuis untuk melihat perkembanganmu.";
+ b.appendChild(quizHeader("Perjalanan kuis selesai! 🎉","Kamu sudah menuntaskan kelima level. Berikut rangkuman dan saran belajar berdasarkan hasilmu."));
+ var wrap=document.createElement("div");wrap.className="quiz-result";var score=document.createElement("div");score.className="quiz-score";score.textContent=total+" / 50";wrap.appendChild(score);
+ var percent=document.createElement("b");percent.textContent=pct+"% · "+(pct>=90?"Sangat baik":pct>=75?"Baik":pct>=60?"Cukup":"Terus berlatih");wrap.appendChild(percent);
+ var msg=document.createElement("p");msg.textContent=feedback;wrap.appendChild(msg);b.appendChild(wrap);
+ var grid=document.createElement("div");grid.className="quiz-level-results";LEVELS.forEach(function(l,i){var cell=document.createElement("div"),name=document.createElement("b"),sc=document.createElement("span");name.textContent="Level "+(i+1)+" · "+l.name;sc.textContent=(quizBest[i]||0)+"/10";cell.appendChild(name);cell.appendChild(sc);grid.appendChild(cell)});b.appendChild(grid);
+ var actions=document.createElement("div");actions.className="quiz-actions";actions.appendChild(quizButton("Ulangi seluruh kuis",function(){quizDone=[];quizBest=[];quizMenu()}));b.appendChild(actions);var back=document.createElement("div");back.className="quiz-return";back.appendChild(quizButton("← Kembali",quizMenu,true));b.appendChild(back)
+}
 /* ---------- navigasi & init ---------- */
 function go(p){[].forEach.call(document.querySelectorAll(".pg"),function(e){e.classList.toggle("on",e.id==p)});[].forEach.call($("nv").children,function(b){b.classList.toggle("on",b.dataset.p==p)});scrollTo(0,0)}
 [].forEach.call(document.querySelectorAll("[data-p],[data-go]"),function(b){b.onclick=function(){go(b.dataset.p||b.dataset.go)}});
-chips($("bt"),CP.map(function(c){return c[0]+" vs "+c[1]}),cmp);cmp(0);rq();
+chips($("bt"),CP.map(function(c){return c[0]+" vs "+c[1]}),cmp);cmp(0);quizMenu();
 chips($("it"),TN,setTab);
 try{
  v1=V($("s1"));v2=V($("s2"));chips($("dt"),DEV.map(function(d){return d[0]}),dev);dev(0);
